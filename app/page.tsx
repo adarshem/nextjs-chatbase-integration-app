@@ -1,5 +1,6 @@
 'use client';
 import { useEffect, useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 
 export default function Home() {
   const [userData, setUserData] = useState<{
@@ -10,12 +11,13 @@ export default function Home() {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
+        const userId = uuidv4(); // Generate a random userId
         const response = await fetch('/api/chat-base', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify({ userId: 'exampleUserId' }) // Replace 'exampleUserId' with the actual userId
+          body: JSON.stringify({ userId })
         });
         const data = await response.json();
         setUserData(data);
@@ -38,7 +40,6 @@ export default function Home() {
             "name": "John Doe",
             "email": "john@example.com",
             "company": "Acme Inc"
-            // Add any other relevant user information
           }
         };
       `;
